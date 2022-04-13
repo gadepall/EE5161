@@ -180,6 +180,7 @@ void setup() {
 
 float target_dir=0.0;
 int td = 3000;
+int inc_angle = 90;
 
 void loop() {
   OTAloop();
@@ -197,7 +198,7 @@ void loop() {
   // Change the next target angle to trace custom trajectory
   if( drive_squares ) {
     if( millis()-last>td ) {
-      target_dir+= 90;
+      target_dir+= inc_angle;
       last= millis();
     }
   }
