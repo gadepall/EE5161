@@ -15,3 +15,6 @@ int td = 3000;
 int inc_angle = 90;
 ```
 2. Variable td, inc_angle will vary according to the shape. Variables MOTOR_NOMINAL, PID_K_p, PID_K_i and PID_K_d are hyper hyperparamters, these are needed to be tuned based on experiments.
+
+### References
+[1] https://github.com/maarten-pennings/MPU6050
