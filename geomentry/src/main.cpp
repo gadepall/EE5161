@@ -5,10 +5,8 @@
 
 //    Can be client or even host   //
 #ifndef STASSID
-// #define STASSID "Uday kiran"  // Add your network credentials
-// #define STAPSK  "reddy2002"
-#define STASSID "John_Wick"  // Add your network credentials
-#define STAPSK  "D411_Uday"
+#define STASSID ""  // Add your network credentials
+#define STAPSK  ""
 #endif
 
 const char* ssid = STASSID;
@@ -51,11 +49,8 @@ void mpu6050_begin()  {
 float mpu6050_yaw() {
   MPU6050_t data= mpu6050.get();
   while( data.dir.error!=0 ) { 
-    // I suffer from a lot of I2C problems
     Serial.println(mpu6050.error_str(data.dir.error));
-    // Reset I2C
     Wire.begin();
-    // Reread
     data= mpu6050.get();
   }
   return data.dir.yaw;
@@ -63,8 +58,6 @@ float mpu6050_yaw() {
 
 
 // Motors ===================================================
-// Robot has two motors, one for the right wheel and one for the left
-
 Motor Motor1;
 Motor Motor2;
 
@@ -91,25 +84,19 @@ void motor_B_set( int speed ) {
   Motor2.moveMotor(speed);
 }
 
-#define MOTOR_NOMINAL  180
-// #define MOTOR_DELTAMAX  75
+#define MOTOR_NOMINAL  18
 
 #define PID_K_p 30.0
-#define PID_K_i  2 // 1.2
+#define PID_K_i  2
 #define PID_K_d  1.0
 
 
-// Switches both motors off
 void motor_off() {
   motor_A_set(0);
   motor_B_set(0);
 }
 
-// Switches both motors to forward (to speed MOTOR_NOMINAL), but B motor 'delta' 
-// faster than A motor (delta in range -MOTOR_DELTAMAX..+-MOTOR_DELTAMAX)
 void motor_forward(int delta) {
-  // if( delta>+MOTOR_DELTAMAX ) delta= +MOTOR_DELTAMAX;
-  // if( delta<-MOTOR_DELTAMAX ) delta= -MOTOR_DELTAMAX;
   motor_A_set(MOTOR_NOMINAL-delta);
   motor_B_set(MOTOR_NOMINAL+delta);
 }
@@ -205,6 +192,8 @@ void loop() {
   steer= pid( target_dir - current_dir );
   // Serial.print(" steer="); Serial.println(steer);
   motor_forward(steer);  
+  
+  // Change the next target angle to trace custom trajectory
   if( drive_squares ) {
     if( millis()-last>3000 ) {
       target_dir+= 90;
