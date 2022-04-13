@@ -4,6 +4,9 @@
 
 ### This implementation uses the gyroscope data from MP6050 to get current orientation of UGV, then we use PID controller to correct the position. 
 
+### Circuit diagram
+![alt text](https://i0.wp.com/randomnerdtutorials.com/wp-content/uploads/2020/12/MPU6050_ESP32_Wiring-Schematic-Diagram.png?resize=726%2C687&quality=100&strip=all&ssl=1)
+
 1. Change your network credentials in main.cpp
 ```
 #define MOTOR_NOMINAL  18
